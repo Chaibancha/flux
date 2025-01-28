@@ -1,0 +1,27 @@
+from together import Together
+from dotenv import load_dotenv
+import os
+import base64
+
+# Load the .env file
+load_dotenv()
+
+# Access the variable
+api_key = os.getenv("TOGETHER_API_KEY")
+if not api_key:
+    raise ValueError("TOGETHER_API_KEY environment variable is not set in the .env file.")
+
+print("API Done")
+
+# Initialize the Together client with the API key
+client = Together(api_key=api_key)
+
+imageCompletion = client.images.generate(
+    model="black-forest-labs/FLUX.1-schnell-Free",
+    width=1024,
+    height=768,
+    steps=4,
+    prompt="A dynamic and intense scene depicting a humanoid cat engaged in combat with a humanoid dog. The cat features sleek fur, sharp claws, and feline agility, while the dog showcases a muscular build, canine teeth, and a fierce, determined expression. The setting is a dramatic battleground, filled with energy and movement, capturing the clash between these two anthropomorphic warriors."
+)
+
+print(imageCompletion.data[0].url)
